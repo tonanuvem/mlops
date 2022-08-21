@@ -1,0 +1,71 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger ReST ml-perfil-aluno
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+# Paths supported by the server application
+paths:
+  /predict:
+    post:
+      operationId: predict.MakePrediction
+      tags:
+        - ml-perfil-aluno
+      summary: Create a predict
+      description: Create a new predict
+      parameters:
+        - name: FEATURES
+          in: body
+          description: FEATURES to predict
+          required: True
+          schema:
+            type: object
+            properties:
+              MATRICULA:
+                type: number
+                description: número de matrícula do estudante
+              REPROVACOES_DE:
+                type: integer
+                description: número de reprovações na disciplina 1
+              REPROVACOES_EM:
+                type: integer
+                description: número de reprovações na disciplina 2
+              REPROVACOES_MF:
+                type: integer
+                description: número de reprovações na disciplina 3
+              REPROVACOES_GO:
+                type: integer
+                description: número de reprovações na disciplina 4
+              NOTA_DE:
+                type: integer
+                description: média simples das notas do aluno na disciplina 1
+              NOTA_EM:
+                type: integer
+                description: média simples das notas do aluno na disciplina  2
+              NOTA_MF:
+                type: integer
+                description: média simples das notas do aluno na disciplina  3
+              NOTA_GO:
+                type: integer
+                description: média simples das notas do aluno na disciplina 4
+              INGLES:
+                type: integer
+                description: indica se o estudante tem conhecimento em língua inglesa (0 sim ou 1 não)
+              H_AULA_PRES:
+                type: integer
+                description: horas de estudo presencial realizadas pelo estudante
+              TAREFAS_ONLINE:
+                type: integer
+                description: número de tarefas online entregues pelo estudante
+              FALTAS:
+                type: integer
+                description: número de faltas acumuladas do estudante (todas disciplinas)
+      responses:
+        201:
+          description: Successfully created predict

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.5.2.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        $('.parallax').parallax();
+    		$('.fixed-action-btn').floatingActionButton();  
+        $('.modal').modal();
+        $('.tap-target').tapTarget();
+    		$('.tabs').tabs();
+      });
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+      
+    .bgimg-1, .bgimg-2, .bgimg-3 {
+      position: relative;
+      opacity: 0.65;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+
+    }
+    .bgimg-1 {
+      background-image: url("https://images.unsplash.com/photo-1529236183275-4fdcf2bc987e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1947&q=80");
+      min-height: 100%;
+    }
+
+    .bgimg-2 {
+      background-image: url("https://images.unsplash.com/photo-1496037236076-2fbad1c7ac1c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1100&q=80");
+      min-height: 400px;
+    }
+
+    .bgimg-3 {
+      background-image: url("https://images.unsplash.com/photo-1513755638256-fbef33c0ca1f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80");
+      min-height: 400px;
+    }
+
+    /* Turn off parallax scrolling for tablets and phones */
+    @media only screen and (max-device-width: 1024px) {
+      .bgimg-1, .bgimg-2, .bgimg-3 {
+        background-attachment: scroll;
+      }
+    }  
+    </style>
+    <script type="text/javascript">
+    // Definir postMSG(), conferir Canal e Webhook:
+      function postMSG(){
+        M.toast({html: 'Enviando a mensagem usando Ajax / jQuery!', classes: 'rounded'});
+        var dados = ["513949","1","1","1","1","4.3","4.0","3.1","4.9","0","3","4","3"];
+        var fields = ["MATRICULA","REPROVACOES_DE","REPROVACOES_EM","REPROVACOES_MF","REPROVACOES_GO","NOTA_DE","NOTA_EM","NOTA_MF","NOTA_GO","INGLES","H_AULA_PRES","TAREFAS_ONLINE","FALTAS"];
+        //var webhook = document.getElementById('webhook').value
+        //var msg = document.getElementById('msgInput').value
+        //var chan = document.getElementById('canal').value
+        //var user = document.getElementById('user').value
+        //var icone = document.getElementById('icone').value
+        var MATRICULA = dados[0];
+        var REPROVACOES_DE = dados[1];
+        var REPROVACOES_EM = dados[2];
+        var REPROVACOES_MF = dados[3];
+        var REPROVACOES_GO = dados[4];
+        var NOTA_DE = dados[5];
+        var NOTA_EM = dados[6];
+        var NOTA_MF = dados[7];
+        var NOTA_GO = dados[8];
+        var INGLES = dados[9];
+        var H_AULA_PRES = dados[10];
+        var TAREFAS_ONLINE = dados[11];
+        var FALTAS = dados[12];
+        
+        // format payload
+        var payload = {
+          "fields": fields,
+          "values": dados,
+        };
+        var sdata = JSON.stringify(payload)
+        // log in console
+        console.log(sdata)
+        // post
+         $.ajax({
+           url: webhook,
+           type: 'POST',
+           processData: true,
+           data : sdata ,
+           success : function(data) {
+             // success will show on page
+             console.log(data)
+             $('#result').html(data);
+           },
+           error: function(data){
+             // error will show error object
+             console.log(data)
+             $('#result').html("error:"+JSON.stringify(data));
+          }
+         });
+      }
+    </script>
+    <title>Frontend Web Server</title>
+  </head>
+  <body>
+    <div class="bgimg-3">
+      <div class="container">
+        <div class="col s2">&nbsp;</div>
+        <div class="col s12">
+          <div class="card grey darken-4">
+            <div class="card-content white-text">
+              <div class="card-title">NOME ALUNO <br>
+                Envio para Machine Learning</div>
+            </div>
+            <div class="card-content white">
+              <table class="bordered">
+                <form id="slackform"></form>
+                <tbody>
+                  <tr>
+                    <td>URL API</td>
+                    <td>
+                      <div class="input-field col s12"> <textarea id="webhook"
+class="materialize-textarea">http://54.147.158.92:32000/predict</textarea>
+                        <label for="webhook">Digite o Webhook</label> </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>MATRICULA</td>
+                    <td>
+                      <div class="input-field col s12"> <textarea id="matricula"
+class="materialize-textarea">12345</textarea>
+                        <label for="matricula">Matricula do Aluno</label> </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>REPROVAÇÕES</td>
+                    <td>
+                      <div class="card">
+                        <div class="card-content">
+                          <p>Quantidade de Reprovações por matéria</p>
+                        </div>
+                        <div class="card-tabs">
+                          <ul class="tabs tabs-fixed-width">
+                            <li class="tab"><a href="#rep1">Direito Empresarial</a></li>
+                            <li class="tab"><a class="active" href="#rep2">Empreendedorismo</a></li>
+                            <li class="tab"><a href="#rep3">Matemática
+                                Financeira</a></li>
+                            <li class="tab"><a href="#rep4">Gestão Operacional</a></li>
+                          </ul>
+                        </div>
+                        <div class="card-content grey lighten-4">
+                          <div id="rep1">
+                            <div class="input-field col s12"> <textarea id="msgInput_rep1"
+class="materialize-textarea">1</textarea>
+                              <label for="msgInput_rep1"> Digite a quantidade de
+                                reprovações na matéria </label> </div>
+                          </div>
+                          <div id="rep2">
+                            <div class="input-field col s12"> <textarea id="msgInput_rep2"
+class="materialize-textarea">1</textarea>
+                              <label for="msgInput_rep2"> Digite a quantidade de
+                                reprovações na matéria </label> </div>
+                          </div>
+                          <div id="rep3">
+                            <div class="input-field col s12"> <textarea id="msgInput_rep3"
+class="materialize-textarea">1</textarea>
+                              <label for="msgInput_rep3"> Digite a quantidade de
+                                reprovações na matéria </label> </div>
+                          </div>
+                          <div id="rep4">
+                            <div class="input-field col s12"> <textarea id="msgInput_rep4"
+class="materialize-textarea">1</textarea>
+                              <label for="msgInput_rep4"> Digite a quantidade de
+                                reprovações na matéria </label> </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>NOTAS</td>
+                    <td>
+                      <div class="card">
+                        <div class="card-content">
+                          <p>Notas por matéria</p>
+                        </div>
+                        <div class="card-tabs">
+                          <ul class="tabs tabs-fixed-width">
+                            <li class="tab"><a href="#nota1">Direito Empresarial</a></li>
+                            <li class="tab"><a class="active" href="#nota2">Empreendedorismo</a></li>
+                            <li class="tab"><a href="#nota3">Matemática
+                                Financeira</a></li>
+                            <li class="tab"><a href="#nota4">Gestão Operacional</a></li>
+                          </ul>
+                        </div>
+                        <div class="card-content grey lighten-4">
+                          <div id="nota1">
+                            <div class="input-field col s12"> <textarea id="msgInput_nota1"
+class="materialize-textarea">4.3</textarea>
+                              <label for="msgInput_nota1"> Nota na matéria </label> </div>
+                          </div>
+                          <div id="nota2">
+                            <div class="input-field col s12"> <textarea id="msgInput_nota2"
+class="materialize-textarea">4.0</textarea>
+                              <label for="msgInput_nota2"> Nota na matéria </label> </div>
+                          </div>
+                          <div id="nota3">
+                            <div class="input-field col s12"> <textarea id="msgInput_nota3"
+class="materialize-textarea">3.1</textarea>
+                              <label for="msgInput_nota3"> Nota na matéria </label> </div>
+                          </div>
+                          <div id="nota4">
+                            <div class="input-field col s12"> <textarea id="msgInput_nota4"
+class="materialize-textarea">4.9</textarea>
+                              <label for="msgInput_nota4"> Nota na matéria </label> </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>OBSERVAÇÕES<a href="https://www.webfx.com/tools/emoji-cheat-sheet/"
+                        target="_blank"></a></td>
+                    <td>
+                      <div class="card">
+                        <div class="card-content">
+                          <p>Outras informações do aluno</p>
+                        </div>
+                        <div class="card-tabs">
+                          <ul class="tabs tabs-fixed-width">
+                            <li class="tab"><a href="#obs1">Tem conhecimento em língua inglesa</a></li>
+                            <li class="tab"><a class="active" href="#obs2">Horas de estudo presencial</a></li>
+                            <li class="tab"><a href="#obs3">Qtd horas de estudo presencial</a></li>
+                            <li class="tab"><a href="#obs4">Qtd de faltas acumuladas</a></li>
+                          </ul>
+                        </div>
+                        <div class="card-content grey lighten-4">
+                          <div id="obs1">
+                            <div class="input-field col s12"> <textarea id="msgInput_obs1"
+class="materialize-textarea">0</textarea>
+                              <label for="msgInput_obs1"> Digite 0 para NÃO ou 1 para SIM</label> </div>
+                          </div>
+                          <div id="obs2">
+                            <div class="input-field col s12"> <textarea id="msgInput_obs2"
+class="materialize-textarea">3</textarea>
+                              <label for="msgInput_obs2"> Digite a observação</label> </div>
+                          </div>
+                          <div id="obs3">
+                            <div class="input-field col s12"> <textarea id="msgInput_obs3"
+class="materialize-textarea">4</textarea>
+                              <label for="msgInput_obs3"> Digite a observação</label> </div>
+                          </div>
+                          <div id="obs4">
+                            <div class="input-field col s12"> <textarea id="msgInput_obs4"
+class="materialize-textarea">3</textarea>
+                              <label for="msgInput_obs4"> Digite a observação</label> </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Clicar</td>
+                    <td>
+                      <!-- <center><input value="enviar" onclick="postMSG()" type="button"></center> -->
+                      <a class="waves-effect waves-light btn" onclick="postMSG()">enviar</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card grey darken-4">
+            <div class="card-content white-text">
+              <div class="card-title">Resultado: </div>
+            </div>
+            <div class="card-content white">
+              <div id="result"></div>
+              <table class="bordered">
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col s2">&nbsp;</div>
+      </div>
+      <div class="fixed-action-btn">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <a class="btn-floating btn-large blue"> <i class="large material-icons">menu</i>
+        </a>
+        <ul>
+          <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+          <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+          <li><a id="menu" class="btn-floating green"><i class="material-icons">publish</i></a></li>
+          <li><a class="btn-floating grey btn modal-trigger" href="#modal1"><i class="material-icons">attach_file</i></a></li>
+          <li><a class="btn-floating purple" onclick="M.toast({html: 'Clicou em Apps!', classes: 'rounded'});">apps</a></li>
+        </ul>
+      </div>
+      <!-- Element Showed  TODO - NON VAI --> <a id="menu" class="waves-effect waves-light btn btn-floating"><i
+          class="material-icons">menu</i></a>
+      <!-- Modal Structure -->
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+          <h4>Modal Header</h4>
+          <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer"> <a href="#%21" class="modal-close waves-effect waves-green btn-flat">OK</a>
+        </div>
+      </div>
+      <!-- Tap Target Structure -->
+      <div class="tap-target" data-target="menu">
+        <div class="tap-target-content">
+          <h5>Title</h5>
+          <p>A bunch of text</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

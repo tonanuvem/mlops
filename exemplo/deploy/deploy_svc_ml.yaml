@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-deployment
+  labels:
+    app: fiapml
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: fiapml
+  template:
+    metadata:
+      labels:
+        app: fiapml
+    spec:
+      containers:
+        - name: fiapml
+          image: "ml-perfil-aluno-custom-model"
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 5000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ml-service
+spec:
+  selector:
+    app: fiapml
+  ports:
+    - protocol: "TCP"
+      port: 5000
+      targetPort: 5000
+      nodePort: 32000
+  type: NodePort

@@ -1,0 +1,34 @@
+{
+    "fields": [
+        "MATRICULA",
+        "REPROVACOES_DE",
+        "REPROVACOES_EM",
+        "REPROVACOES_MF",
+        "REPROVACOES_GO",
+        "NOTA_DE",
+        "NOTA_EM",
+        "NOTA_MF",
+        "NOTA_GO",
+        "INGLES",
+        "H_AULA_PRES",
+        "TAREFAS_ONLINE",
+        "FALTAS"
+    ],
+    "values": [
+        [
+            513949,
+            1,
+            1,
+            1,
+            1,
+            4.3,
+            4.0,
+            3.1,
+            4.9,
+            0,
+            3,
+            4,
+            3
+        ]
+    ]
+}

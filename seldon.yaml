@@ -1,0 +1,84 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: model-gateway
+  namespace: seldon
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - '*'
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+---
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name: seldon-model
+spec:
+  name: test-deployment
+  predictors:
+  - componentSpecs:
+    - spec:
+        containers:
+        - image: seldonio/mock_classifier_rest:1.3
+          name: classifier
+    graph:
+      children: []
+      endpoint:
+        type: REST
+      name: classifier
+      type: MODEL
+    name: example
+    replicas: 1
+#---
+#apiVersion: "serving.kubeflow.org/v1alpha2"
+#kind: "InferenceService"
+#metadata:
+#  name: "fiap-modelo"
+#spec:
+#  default:
+#    predictor:
+#      tensorflow:
+#        storageUri: "pvc://${PVC_NAME}/export"
+---
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name: fiap-modelo
+  namespace: seldon
+spec:
+  name: fiap
+  predictors:
+  - graph:
+#      children: []
+#      endpoint:
+#        type: REST
+      implementation: SKLEARN_SERVER
+#      modelUri: gs://seldon-models/sklearn/iris
+      storageUri: "pvc://workspace-nb1/kubeflow/exemplo"
+      name: classifier
+    name: default
+    replicas: 1
+    svcOrchSpec: 
+      env: 
+      - name: SELDON_LOG_LEVEL
+        value: DEBUG
+---
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name: iris-model
+  namespace: seldon
+spec:
+  name: iris
+  predictors:
+  - graph:
+      implementation: SKLEARN_SERVER
+      modelUri: gs://seldon-models/sklearn/iris
+      name: classifier
+    name: default
+    replicas: 1

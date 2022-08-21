@@ -1,0 +1,14 @@
+apiVersion: serving.kubeflow.org/v1alpha2
+kind: InferenceService
+metadata:
+  labels:
+    controller-tools.k8s.io: "1.0"
+  name: kfserving-perfil-aluno-custom-model
+spec:
+  default:
+    predictor:
+      custom:
+        container:
+          image: tonanuvem/ml-perfil-aluno-custom-model 
+          ports:
+            - containerPort: 5000
