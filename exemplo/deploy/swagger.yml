@@ -30,28 +30,28 @@ paths:
               MATRICULA:
                 type: number
                 description: número de matrícula do estudante
-              REPROVACOES_DE:
+              REPROVACOES_MAT1:
                 type: integer
                 description: número de reprovações na disciplina 1
-              REPROVACOES_EM:
+              REPROVACOESS_MAT2:
                 type: integer
                 description: número de reprovações na disciplina 2
-              REPROVACOES_MF:
+              REPROVACOESS_MAT3:
                 type: integer
                 description: número de reprovações na disciplina 3
-              REPROVACOES_GO:
+              REPROVACOESS_MAT4:
                 type: integer
                 description: número de reprovações na disciplina 4
-              NOTA_DE:
+              NOTS_MAT1:
                 type: integer
                 description: média simples das notas do aluno na disciplina 1
-              NOTA_EM:
+              NOTAS_MAT2:
                 type: integer
                 description: média simples das notas do aluno na disciplina  2
-              NOTA_MF:
+              NOTAS_MAT3:
                 type: integer
                 description: média simples das notas do aluno na disciplina  3
-              NOTA_GO:
+              NOTAS_MAT4:
                 type: integer
                 description: média simples das notas do aluno na disciplina 4
               INGLES:
