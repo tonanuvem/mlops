@@ -42,7 +42,7 @@ paths:
               REPROVACOESS_MAT4:
                 type: integer
                 description: número de reprovações na disciplina 4
-              NOTS_MAT1:
+              NOTAS_MAT1:
                 type: integer
                 description: média simples das notas do aluno na disciplina 1
               NOTAS_MAT2:
