@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_restful import Api, Resource
 import joblib
 
@@ -20,14 +20,14 @@ class MakePrediction(Resource):
         dados = payload['values'][0]
 
         MATRICULA = dados[0] #['MATRICULA']
-        REPROVACOES_DE = dados[1] #['REPROVACOES_DE']
-        REPROVACOES_EM = dados[2] #['REPROVACOES_EM']
-        REPROVACOES_MF = dados[3] #['REPROVACOES_MF']
-        REPROVACOES_GO = dados[4] #['REPROVACOES_GO']
-        NOTA_DE = dados[5] #['NOTA_DE']
-        NOTA_EM = dados[6] #['NOTA_EM']
-        NOTA_MF = dados[7] #['NOTA_MF']
-        NOTA_GO = dados[8] #['NOTA_GO']
+        REPROVACOES_MAT1 = dados[1] #['REPROVACOES_MAT']
+        REPROVACOES_MAT2 = dados[2] #['REPROVACOES_MAT']
+        REPROVACOES_MAT3 = dados[3] #['REPROVACOES_MAT']
+        REPROVACOES_MAT4 = dados[4] #['REPROVACOES_MAT']
+        NOTA_MAT1 = dados[5] #['NOTA_MAT']
+        NOTA_MAT2 = dados[6] #['NOTA_MAT']
+        NOTA_MAT3 = dados[7] #['NOTA_MAT']
+        NOTA_MAT4 = dados[8] #['NOTA_MAT']
         INGLES = dados[9] #['INGLES']
         H_AULA_PRES = dados[10] #['H_AULA_PRES']
         TAREFAS_ONLINE = dados[11] #['TAREFAS_ONLINE']
@@ -50,7 +50,8 @@ api.add_resource(MakePrediction, '/predict')
 
 @app.route('/')
 def home():
-    return "API ONLINE. Acessasr o endpoint: /predict"
+    return render_template('index.html')
+    #return "API ONLINE. Acessasr o endpoint: /predict"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
