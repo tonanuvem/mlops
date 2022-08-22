@@ -14,6 +14,6 @@ PX_POD=$(kubectl get pods -l name=portworx -n kube-system -o jsonpath='{.items[0
 #kubectl describe pv $VOL
 #kubectl exec -it $PX_POD -n kube-system -- /opt/pwx/bin/pxctl volume list
 echo ""
-echo "   Informações sobre o DISCO GERENCIADO pelo portworx::"
+echo "   Informações sobre o DISCO GERENCIADO pelo STORAGE CLASS (SC) Portworx:"
 echo ""
 kubectl exec -it $PX_POD -n kube-system -- /opt/pwx/bin/pxctl volume inspect $VOL
