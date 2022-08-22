@@ -1,8 +1,10 @@
 echo ""
 echo "Informações sobre PERSISTENT VOLUME CLAIM (PVC) e STORAGE CLASS (SC):"
+echo ""
 kubectl get pvc -n fiap
 echo "---"
 echo "Informações sobre PERSISTENT VOLUME (PV) no Cluster:"
+echo ""
 kubectl get pv | grep fiap
 echo ""
 VOL=$(kubectl get pv | grep fiap | awk '{print $1}' | xargs echo)
