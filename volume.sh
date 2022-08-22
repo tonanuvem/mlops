@@ -1,5 +1,5 @@
 echo ""
-echo "Informações sobre PERSISTENT VOLUME CLAIM (PVC) no Cluster:"
+echo "Informações sobre PERSISTENT VOLUME CLAIM (PVC) e STORAGE CLASS (SC):"
 kubectl get pvc -n fiap
 echo "---"
 echo "Informações sobre PERSISTENT VOLUME (PV) no Cluster:"
