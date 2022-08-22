@@ -32,7 +32,7 @@ class MakePrediction(Resource):
         TAREFAS_ONLINE = dados[10] #['TAREFAS_ONLINE']
         FALTAS = dados[11] #['FALTAS']
 
-        prediction = model.predict([[REPROVACOES_DE, REPROVACOES_EM, REPROVACOES_MF, REPROVACOES_GO, NOTA_DE, NOTA_EM, NOTA_MF, NOTA_GO, INGLES, H_AULA_PRES, TAREFAS_ONLINE, FALTAS]])[0]
+        prediction = model.predict([[REPROVACOES_MAT1, REPROVACOES_MAT2, REPROVACOES_MAT3, REPROVACOES_MAT4, NOTA_MAT1, NOTA_MAT2, NOTA_MAT3, NOTA_MAT4, INGLES, H_AULA_PRES, TAREFAS_ONLINE, FALTAS]])[0]
 
         return jsonify({
             'FEATURES': features,
