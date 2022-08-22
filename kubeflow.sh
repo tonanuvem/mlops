@@ -17,9 +17,13 @@ while [ "$(kubectl get pod -n kubeflow | grep profile | grep Running | wc -l)" !
   printf "."
   sleep 1
 done
-sh ~/kubeflow/update_domain.sh # atualiza o dominio do Knative
+sh ~/mlflow/update_domain.sh # atualiza o dominio do Knative
 echo "Pronto."
 echo " $ kubectl get pod -n kubeflow | grep profile"
 kubectl get pod -n kubeflow | grep profile
-echo "Acessar: http://$INGRESS_HOST:$INGRESS_PORT"
+echo ""
 echo "Verificar os pods existentes : $ kubectl get pod --all-namespaces"
+echo ""
+echo ""
+echo "Acessar: http://$INGRESS_HOST:$INGRESS_PORT"
+echo ""
