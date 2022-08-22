@@ -2,7 +2,7 @@ echo ""
 echo "Informações sobre PERSISTENT VOLUME CLAIM (PVC) e STORAGE CLASS (SC):"
 echo ""
 kubectl get pvc -n fiap
-echo "---"
+echo ""
 echo "Informações sobre PERSISTENT VOLUME (PV) no Cluster:"
 echo ""
 kubectl get pv | grep fiap
@@ -13,7 +13,7 @@ PX_POD=$(kubectl get pods -l name=portworx -n kube-system -o jsonpath='{.items[0
 #echo "Detalhe do PERSISTENT VOLUME (PV), informando quem é o STORAGE CLASS (SC) usado:"
 #kubectl describe pv $VOL
 #kubectl exec -it $PX_POD -n kube-system -- /opt/pwx/bin/pxctl volume list
-echo "---"
+echo ""
 echo "Informações sobre o DISCO GERENCIADO pelo portworx::"
 echo ""
 kubectl exec -it $PX_POD -n kube-system -- /opt/pwx/bin/pxctl volume inspect $VOL
