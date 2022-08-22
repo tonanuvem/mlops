@@ -51,7 +51,7 @@ api.add_resource(MakePrediction, '/predict')
 @app.route('/')
 def home():
     return render_template('index.html')
-    #return "API ONLINE. Acessasr o endpoint: /predict"
+    #return "API ONLINE. Acessar o endpoint: /predict"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
