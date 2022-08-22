@@ -1,6 +1,5 @@
 {
     "fields": [
-        "MATRICULA",
         "REPROVACOES_DE",
         "REPROVACOES_EM",
         "REPROVACOES_MF",
@@ -16,7 +15,6 @@
     ],
     "values": [
         [
-            513949,
             1,
             1,
             1,
