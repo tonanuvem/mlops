@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: fiapml
-          image: "tonanuvem/ml-perfil-aluno-custom-model:mlops"
+          image: "tonanuvem/ml-perfil-aluno-custom-model"
           #imagePullPolicy: Never
           ports:
             - name: http
