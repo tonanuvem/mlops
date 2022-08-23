@@ -39,11 +39,14 @@ class MakePrediction(Resource):
 
         prediction = model.predict([[REPROVACOES_MAT1, REPROVACOES_MAT2, REPROVACOES_MAT3, REPROVACOES_MAT4, NOTA_MAT1, NOTA_MAT2, NOTA_MAT3, NOTA_MAT4, INGLES, H_AULA_PRES, TAREFAS_ONLINE, FALTAS]])[0]
 
-        return jsonify({
+        response = jsonify({
             'FEATURES': features,
             'VALORES': dados,
             '_PERFIL_CALCULADO': prediction
         })
+        # Configura headers CORS
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        return response
     
     @staticmethod
     @cross_origin()
