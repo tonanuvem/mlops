@@ -14,6 +14,10 @@
         $('.modal').modal();
         $('.tap-target').tapTarget();
     		$('.tabs').tabs();
+        $('#webhook').html(
+            window.location.protocol+'//'+
+            window.location.host+'/predict'
+        );
       });
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -124,7 +128,7 @@
                     <td>
                       <div class="input-field col s12">
                         <i class="material-icons prefix">import_export</i>
-                        <textarea id="webhook" class="materialize-textarea">http://IP:32000/predict</textarea>
+                        <textarea id="webhook" class="materialize-textarea"></textarea>
                         <label for="webhook">Digite a URL</label> </div>
                     </td>
                   </tr>
