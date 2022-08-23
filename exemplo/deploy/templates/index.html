@@ -55,30 +55,27 @@
     }  
     </style>
     <script type="text/javascript">
-    // Definir postMSG(), conferir Canal e Webhook:
       function postMSG(){
         M.toast({html: 'Enviando a mensagem usando Ajax / jQuery!', classes: 'rounded'});
         var dados = ["513949","1","1","1","1","4.3","4.0","3.1","4.9","0","3","4","3"];
         var fields = ["MATRICULA","REPROVACOES_MAT1","REPROVACOES_MAT2","REPROVACOES_MAT3","REPROVACOES_MAT4","NOTA_MAT1","NOTA_MAT2","NOTA_MAT3","NOTA_MAT4","INGLES","H_AULA_PRES","TAREFAS_ONLINE","FALTAS"];
         var webhook = document.getElementById('webhook').value
-        //var msg = document.getElementById('msgInput').value
-        //var chan = document.getElementById('canal').value
-        //var user = document.getElementById('user').value
-        //var icone = document.getElementById('icone').value
-        var MATRICULA = dados[0];
-        var REPROVACOES_MAT1 = dados[1];
-        var REPROVACOES_MAT2 = dados[2];
-        var REPROVACOES_MAT3 = dados[3];
-        var REPROVACOES_MAT4 = dados[4];
-        var NOTA_MAT1 = dados[5];
-        var NOTA_MAT2 = dados[6];
-        var NOTA_MAT3 = dados[7];
-        var NOTA_MAT4 = dados[8];
-        var INGLES = dados[9];
-        var H_AULA_PRES = dados[10];
-        var TAREFAS_ONLINE = dados[11];
-        var FALTAS = dados[12];
+        var REPROVACOES_MAT1 = document.getElementById('rep1').value;
+        var REPROVACOES_MAT2 = document.getElementById('rep2').value;
+        var REPROVACOES_MAT3 = document.getElementById('rep3').value;
+        var REPROVACOES_MAT4 = document.getElementById('rep4').value;
+        var NOTA_MAT1 = document.getElementById('nota1').value;
+        var NOTA_MAT2 = document.getElementById('nota2').value;
+        var NOTA_MAT3 = document.getElementById('nota3').value;
+        var NOTA_MAT4 = document.getElementById('nota4').value;
+        var INGLES = document.getElementById('obs1').value;
+        var H_AULA_PRES = document.getElementById('obs2').value;
+        var TAREFAS_ONLINE = document.getElementById('obs3').value;
+        var FALTAS = document.getElementById('obs4').value;
         
+        var dados = [REPROVACOES_MAT1,REPROVACOES_MAT2,REPROVACOES_MAT3,REPROVACOES_MAT4,
+                    NOTA_MAT1,NOTA_MAT2,NOTA_MAT3,NOTA_MAT4,
+                    INGLES,H_AULA_PRES,TAREFAS_ONLINE,FALTAS];
         // format payload
         var payload = {
           "fields": fields,
@@ -92,11 +89,12 @@
            url: webhook,
            type: 'POST',
            processData: true,
+           contentType: "application/json",
            data : sdata ,
            success : function(data) {
              // success will show on page
              console.log(data)
-             $('#result').html(data);
+             $('#result').html("sucesso: <b>_PERFIL_CALCULADO</b> = "+JSON.stringify(data._PERFIL_CALCULADO));
            },
            error: function(data){
              // error will show error object
@@ -120,14 +118,13 @@
             </div>
             <div class="card-content white">
               <table class="bordered">
-                <form id="slackform"></form>
                 <tbody>
                   <tr>
                     <td>URL API</td>
                     <td>
                       <div class="input-field col s12">
                         <i class="material-icons prefix">import_export</i>
-                        <textarea id="webhook" class="materialize-textarea">http://localhost:5000/predict</textarea>
+                        <textarea id="webhook" class="materialize-textarea">http://IP:32000/predict</textarea>
                         <label for="webhook">Digite a URL</label> </div>
                     </td>
                   </tr>
@@ -152,8 +149,8 @@
                                 <div>
                                   <div class="input-field col s3"> 
                                     <i class="material-icons prefix">error</i>
-                                    <textarea id="msgInput_rep1" class="materialize-textarea">1</textarea>
-                                    <label for="msgInput_rep1"> Digite a quantidade de reprovações</label> </div>
+                                    <textarea id="rep1" class="materialize-textarea">1</textarea>
+                                    <label for="rep1"> Digite a quantidade de reprovações</label> </div>
                                 </div>
                               </div>
                             </div>    
@@ -161,15 +158,15 @@
                               <div class="card-content">
                                 <div class="card-tabs">
                                   <ul class="tabs tabs-fixed-width">
-                                    <li class="tab col s6"><a href="#rep1">MATERIA 2</a></li>
+                                    <li class="tab col s6"><a href="#rep2">MATERIA 2</a></li>
                                 </div>
                               </div>
                               <div class="card-action">
                                 <div>
                                   <div class="input-field col s3">
                                     <i class="material-icons prefix">error</i>
-                                    <textarea id="msgInput_rep2" class="materialize-textarea">1</textarea>
-                                    <label for="msgInput_rep2"> Digite a quantidade de reprovações</label> </div>
+                                    <textarea id="rep2" class="materialize-textarea">1</textarea>
+                                    <label for="rep2"> Digite a quantidade de reprovações</label> </div>
                                 </div>
                               </div>
                             </div>                            
@@ -179,15 +176,15 @@
                               <div class="card-content">
                                 <div class="card-tabs">
                                   <ul class="tabs tabs-fixed-width">
-                                    <li class="tab col s6"><a href="#rep1">MATERIA 3</a></li>
+                                    <li class="tab col s6"><a href="#rep3">MATERIA 3</a></li>
                                 </div>
                               </div>
                               <div class="card-action">
                                 <div>
                                   <div class="input-field col s3">
                                     <i class="material-icons prefix">error</i>
-                                    <textarea id="msgInput_rep3" class="materialize-textarea">1</textarea>
-                                    <label for="msgInput_rep3"> Digite a quantidade de reprovações</label> </div>
+                                    <textarea id="rep3" class="materialize-textarea">1</textarea>
+                                    <label for="rep3"> Digite a quantidade de reprovações</label> </div>
                                 </div>
                               </div>
                             </div>    
@@ -195,15 +192,15 @@
                               <div class="card-content">
                                 <div class="card-tabs">
                                   <ul class="tabs tabs-fixed-width">
-                                    <li class="tab col s6"><a href="#rep1">MATERIA 4</a></li>
+                                    <li class="tab col s6"><a href="#rep4">MATERIA 4</a></li>
                                 </div>
                               </div>
                               <div class="card-action">
                                 <div>
                                   <div class="input-field col s3">
                                     <i class="material-icons prefix">error</i>
-                                    <textarea id="msgInput_rep4" class="materialize-textarea">1</textarea>
-                                    <label for="msgInput_rep4"> Digite a quantidade de reprovações</label> </div>
+                                    <textarea id="rep4" class="materialize-textarea">1</textarea>
+                                    <label for="rep4"> Digite a quantidade de reprovações</label> </div>
                                 </div>
                               </div>
                             </div>                            
@@ -224,15 +221,15 @@
                               <div class="card-content">
                                 <div class="card-tabs">
                                   <ul class="tabs tabs-fixed-width">
-                                    <li class="tab col s6"><a href="#rep1">MATERIA 1</a></li>
+                                    <li class="tab col s6"><a href="#nota1">MATERIA 1</a></li>
                                 </div>
                               </div>
                               <div class="card-action">
                                 <div>
                                   <div class="input-field col s3"> 
                                     <i class="material-icons prefix">mode_edit</i>
-                                    <textarea id="msgInput_nota1" class="materialize-textarea">7</textarea>
-                                    <label for="msgInput_nota1"> Digite a nota na matéria </label> </div>
+                                    <textarea id="nota1" class="materialize-textarea">7</textarea>
+                                    <label for="nota1"> Digite a nota na matéria </label> </div>
                                 </div>
                               </div>
                             </div>    
@@ -240,15 +237,15 @@
                               <div class="card-content">
                                 <div class="card-tabs">
                                   <ul class="tabs tabs-fixed-width">
-                                    <li class="tab col s6"><a href="#rep1">MATERIA 2</a></li>
+                                    <li class="tab col s6"><a href="#rep2">MATERIA 2</a></li>
                                 </div>
                               </div>
                               <div class="card-action">
                                 <div>
                                   <div class="input-field col s3"> 
                                     <i class="material-icons prefix">mode_edit</i>
-                                    <textarea id="msgInput_nota2" class="materialize-textarea">8</textarea>
-                                    <label for="msgInput_nota2"> Digite a nota na matéria </label> </div>
+                                    <textarea id="nota2" class="materialize-textarea">8</textarea>
+                                    <label for="nota2"> Digite a nota na matéria </label> </div>
                                 </div>
                               </div>
                             </div>                            
@@ -258,15 +255,15 @@
                               <div class="card-content">
                                 <div class="card-tabs">
                                   <ul class="tabs tabs-fixed-width">
-                                    <li class="tab col s6"><a href="#rep1">MATERIA 3</a></li>
+                                    <li class="tab col s6"><a href="#nota3">MATERIA 3</a></li>
                                 </div>
                               </div>
                               <div class="card-action">
                                 <div>
                                   <div class="input-field col s3"> 
                                     <i class="material-icons prefix">mode_edit</i>
-                                    <textarea id="msgInput_nota3" class="materialize-textarea">9</textarea>
-                                    <label for="msgInput_nota3"> Digite a nota na matéria </label> </div>
+                                    <textarea id="nota3" class="materialize-textarea">9</textarea>
+                                    <label for="nota3"> Digite a nota na matéria </label> </div>
                                 </div>
                               </div>
                             </div>    
@@ -274,15 +271,15 @@
                               <div class="card-content">
                                 <div class="card-tabs">
                                   <ul class="tabs tabs-fixed-width">
-                                    <li class="tab col s6"><a href="#rep1">MATERIA 4</a></li>
+                                    <li class="tab col s6"><a href="#nota4">MATERIA 4</a></li>
                                 </div>
                               </div>
                               <div class="card-action">
                                 <div>
                                   <div class="input-field col s3"> 
                                     <i class="material-icons prefix">mode_edit</i>
-                                    <textarea id="msgInput_nota4" class="materialize-textarea">7</textarea>
-                                    <label for="msgInput_nota4"> Digite a nota na matéria </label> </div>
+                                    <textarea id="nota4" class="materialize-textarea">7</textarea>
+                                    <label for="nota4"> Digite a nota na matéria </label> </div>
                                 </div>
                               </div>
                             </div>                            
@@ -304,15 +301,15 @@
                               <div class="card-content">
                                 <div class="card-tabs">
                                   <ul class="tabs tabs-fixed-width">
-                                    <li class="tab col s6"><a href="#obs">Tem conhecimento em língua inglesa</a></li>
+                                    <li class="tab col s6"><a href="#obs1">Tem conhecimento em língua inglesa</a></li>
                                 </div>
                               </div>
                               <div class="card-action">
                                 <div>
                                   <div class="input-field col s3"> 
                                     <i class="material-icons prefix">error</i>
-                                    <textarea id="msgInput_obs1" class="materialize-textarea">1</textarea>
-                                    <label for="msgInput_obs1">Digite 0 para NÃO ou 1 para SIM</label> </div>
+                                    <textarea id="obs1" class="materialize-textarea">1</textarea>
+                                    <label for="obs1">Digite 0 para NÃO ou 1 para SIM</label> </div>
                                 </div>
                               </div>
                             </div>    
@@ -320,15 +317,15 @@
                               <div class="card-content">
                                 <div class="card-tabs">
                                   <ul class="tabs tabs-fixed-width">
-                                    <li class="tab col s6"><a href="#obs">Horas de estudo presencial</a></li>
+                                    <li class="tab col s6"><a href="#obs2">Horas de estudo presencial</a></li>
                                 </div>
                               </div>
                               <div class="card-action">
                                 <div>
                                   <div class="input-field col s3">
                                     <i class="material-icons prefix">error</i>
-                                    <textarea id="msgInput_obs2" class="materialize-textarea">1</textarea>
-                                    <label for="msgInput_obs2">Digite a observação</label> </div>
+                                    <textarea id="obs2" class="materialize-textarea">1</textarea>
+                                    <label for="obs2">Digite a observação</label> </div>
                                 </div>
                               </div>
                             </div>                            
@@ -338,15 +335,15 @@
                               <div class="card-content">
                                 <div class="card-tabs">
                                   <ul class="tabs tabs-fixed-width">
-                                    <li class="tab col s6"><a href="#obs">Qtd horas de estudo presencial</a></li>
+                                    <li class="tab col s6"><a href="#obs3">Qtd horas de estudo presencial</a></li>
                                 </div>
                               </div>
                               <div class="card-action">
                                 <div>
                                   <div class="input-field col s3">
                                     <i class="material-icons prefix">error</i>
-                                    <textarea id="msgInput_obs3" class="materialize-textarea">1</textarea>
-                                    <label for="msgInput_obs3">Digite a observação</label> </div>
+                                    <textarea id="obs3" class="materialize-textarea">1</textarea>
+                                    <label for="obs3">Digite a observação</label> </div>
                                 </div>
                               </div>
                             </div>    
@@ -354,15 +351,15 @@
                               <div class="card-content">
                                 <div class="card-tabs">
                                   <ul class="tabs tabs-fixed-width">
-                                    <li class="tab col s6"><a href="#obs">Qtd de faltas acumuladas</a></li>
+                                    <li class="tab col s6"><a href="#obs4">Qtd de faltas acumuladas</a></li>
                                 </div>
                               </div>
                               <div class="card-action">
                                 <div>
                                   <div class="input-field col s3">
                                     <i class="material-icons prefix">error</i>
-                                    <textarea id="msgInput_obs4" class="materialize-textarea">1</textarea>
-                                    <label for="msgInput_obs4">Digite a observação</label> </div>
+                                    <textarea id="obs4" class="materialize-textarea">1</textarea>
+                                    <label for="obs4">Digite a observação</label> </div>
                                 </div>
                               </div>
                             </div>                            
@@ -371,48 +368,6 @@
                       </td>
                   </tr>
 
-                  <!--
-                  <tr>
-                    <td>OBSERVAÇÕES</td>
-                    <td>
-                      <div class="card">
-                        <div class="card-content">
-                          <p>Outras informações do aluno</p>
-                        </div>
-                        <div class="card-tabs">
-                          <ul class="tabs tabs-fixed-width">
-                            <li class="tab col s3"><a href="#obs1">Tem conhecimento em língua inglesa</a></li>
-                            <li class="tab col s3"><a class="active" href="#obs2">Horas de estudo presencial</a></li>
-                            <li class="tab col s3"><a href="#obs3">Qtd horas de estudo presencial</a></li>
-                            <li class="tab col s3"><a href="#obs4">Qtd de faltas acumuladas</a></li>
-                          </ul>
-                        </div>
-                        <div class="card-content grey lighten-4">
-                          <div id="obs1">
-                            <div class="input-field col s3"> <textarea id="msgInput_obs1"
-class="materialize-textarea">0</textarea>
-                              <label for="msgInput_obs1"> Digite 0 para NÃO ou 1 para SIM</label> </div>
-                          </div>
-                          <div id="obs2">
-                            <div class="input-field col s3"> <textarea id="msgInput_obs2"
-class="materialize-textarea">3</textarea>
-                              <label for="msgInput_obs2"> Digite a observação</label> </div>
-                          </div>
-                          <div id="obs3">
-                            <div class="input-field col s3"> <textarea id="msgInput_obs3"
-class="materialize-textarea">4</textarea>
-                              <label for="msgInput_obs3"> Digite a observação</label> </div>
-                          </div>
-                          <div id="obs4">
-                            <div class="input-field col s3"> <textarea id="msgInput_obs4"
-class="materialize-textarea">3</textarea>
-                              <label for="msgInput_obs4"> Digite a observação</label> </div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  -->
                   <tr>
                     <td>Clicar</td>
                     <td>
@@ -460,13 +415,6 @@ class="materialize-textarea">3</textarea>
           <p>A bunch of text</p>
         </div>
         <div class="modal-footer"> <a href="#%21" class="modal-close waves-effect waves-green btn-flat">OK</a>
-        </div>
-      </div>
-      <!-- Tap Target Structure -->
-      <div class="tap-target" data-target="menu">
-        <div class="tap-target-content">
-          <h5>Title</h5>
-          <p>A bunch of text</p>
         </div>
       </div>
     </div>
