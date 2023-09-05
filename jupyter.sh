@@ -12,7 +12,7 @@ dir="$(pwd)"; echo $dir;
 docker run -it --name jupyter --rm -p 8888:8888 -v "$dir"/mlops/exemplo:/home/jovyan/work -d jupyter/scipy-notebook \
     start-notebook.sh --NotebookApp.password='argon2:$argon2id$v=19$m=10240,t=10,p=8$cIQ7S1OapqyvWzmH636CsA$fh0xOdGwdwv6/cxW5Bqi2mPZuSZlG0zGLwcxl7Ulvac'
 
-docker exec -ti jupyter pip3 install --upgrade pip && export PATH=/home/jovyan/.local/bin:$PATH
+# docker exec -ti jupyter pip3 install --upgrade pip && export PATH=/home/jovyan/.local/bin:$PATH
 
 echo ""
 echo "URL de acesso:"
