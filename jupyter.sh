@@ -2,8 +2,8 @@
 
 echo "Executando Jupyter Notebook para análise e ML dos dados"
 
-dir=`pwd`; dir="$(dirname "$dir")"; echo $dir;
-# dir="$(pwd)"; echo $dir;
+# dir=`pwd`; dir="$(dirname "$dir")"; echo $dir;
+dir="$(pwd)"; echo $dir;
 
 #https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#preparing-a-hashed-password
 # jupyter/scipy-notebook
