@@ -21,7 +21,10 @@ while ! ./kustomize build vanilla | kubectl apply -f -; do echo "Retrying to app
 
 # https://stackoverflow.com/questions/76793434/kubeflow-jupyter-notebook-error-could-not-find-csrf-cookie-xsrf-token-in-the-req
 # https://github.com/kubeflow/manifests/issues/2225
-kubectl patch deploy jupyter-web-app-deployment -n kubeflow -p '{".spec.template.spec.containers[].env": {{"name":"APP_PREFIX","value":"/jupyter"},{"name":"UI","value":"default"},{"name":"USERID_HEADER","value":"kubeflow-userid"},{"name":"USERID_PREFIX"},{"name":"APP_SECURE_COOKIES","value":"false"}}}'
+# solution that adding : - name: APP_SECURE_COOKIES <--> value: "false"
+kubectl set env deploy jupyter-web-app-deployment -n kubeflow APP_SECURE_COOKIES=false
+kubectl get deploy jupyter-web-app-deployment -n kubeflow -o jsonpath='{.spec.template.spec.containers[].env[4]}'
+
 
 #echo "Verificando os pods em execução dos namespaces."
 #kubectl get pods -n cert-manager
