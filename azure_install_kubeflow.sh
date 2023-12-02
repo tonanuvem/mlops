@@ -1,4 +1,5 @@
 # https://azure.github.io/kubeflow-aks/main/docs/deployment-options/vanilla-installation/
+# https://azure.github.io/kubeflow-aks/main/docs/deployment-options/custom-password-tls/
 # grep -Rnw '/path/to/somewhere/' -e 'string procurada'
 # grep -Rnw . -e 'kvAppName'
 
