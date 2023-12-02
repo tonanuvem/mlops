@@ -16,6 +16,7 @@ cd ..
 cp -a deployments/vanilla manifests/vanilla
 cd manifests/
 curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+alias kustomize="$(pwd)/kustomize"
 
 while ! ./kustomize build vanilla | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
 #./kustomize build vanilla > kubeflow_vanilla.yaml
