@@ -87,13 +87,13 @@ kubectl rollout restart deployment dex -n auth
 
 echo " > Acessar o UI do Kubeflow"
 echo ""
-echo " -- "
-echo ""
 # Acesso ao Kubeflow
+echo " -- "
 echo " Acessar Kubeflow: http://$INGRESS_DOMAIN"
+echo ""
 echo "    login = user@example.com"
 echo "    pass  = 12341234"
-echo ""
+echo " -- "
 echo ""
 echo "Pronto."
 
