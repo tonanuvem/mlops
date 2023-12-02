@@ -74,10 +74,10 @@ kubectl get cm config-domain --namespace knative-serving
 # [OPCIONAL] Katlib (usa bastante memoria, não rodar esse componentes)
 #kustomize build apps/katib/upstream/installs/katib-with-kubeflow | kubectl apply -f -
 # [OPCIONAL] Tensorboard
-kustomize build apps/tensorboard/tensorboards-web-app/upstream/overlays/istio | kubectl apply -f -
-kustomize build apps/tensorboard/tensorboard-controller/upstream/overlays/kubeflow | kubectl apply -f -
+#kustomize build apps/tensorboard/tensorboards-web-app/upstream/overlays/istio | kubectl apply -f -
+#kustomize build apps/tensorboard/tensorboard-controller/upstream/overlays/kubeflow | kubectl apply -f -
 # OPCIONAL] Training Operator
-kustomize build apps/training-operator/upstream/overlays/kubeflow | kubectl apply -f -
+#kustomize build apps/training-operator/upstream/overlays/kubeflow | kubectl apply -f -
 
 
 # https://stackoverflow.com/questions/76793434/kubeflow-jupyter-notebook-error-could-not-find-csrf-cookie-xsrf-token-in-the-req
