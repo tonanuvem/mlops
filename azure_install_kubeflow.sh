@@ -20,7 +20,7 @@ alias kustomize="$(pwd)/kustomize"
 
 # Maneiras de rodar o Kubeflow:
 # 1) rodar todos os componentes, precisa ter bastante cpu e memoria
-while ! ./kustomize build vanilla | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
+#while ! ./kustomize build vanilla | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
 
 # 2) criar yaml para depois rodar todos os componentes, precisa ter bastante cpu e memoria
 #./kustomize build vanilla > kubeflow_vanilla.yaml
