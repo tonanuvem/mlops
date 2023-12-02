@@ -18,9 +18,25 @@ cd manifests/
 curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
 alias kustomize="$(pwd)/kustomize"
 
+# Maneiras de rodar o Kubeflow:
+# 1) rodar todos os componentes, precisa ter bastante cpu e memoria
 while ! ./kustomize build vanilla | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
+
+# 2) criar yaml para depois rodar todos os componentes, precisa ter bastante cpu e memoria
 #./kustomize build vanilla > kubeflow_vanilla.yaml
 #kubectl apply -f kubeflow_vanilla.yaml
+
+# 3) rodar somente alguns componentes para econmicar cpu e memoria
+kustomize build common/oidc-authservice/base | kubectl apply -f -
+kustomize build common/kubeflow-namespace/base | kubectl apply -f -
+kustomize build common/kubeflow-roles/base | kubectl apply -f -
+kustomize build common/istio-1-16/kubeflow-istio-resources/base | kubectl apply -f -
+kustomize build apps/centraldashboard/upstream/overlays/kserve | kubectl apply -f -
+kustomize build apps/admission-webhook/upstream/overlays/cert-manager | kubectl apply -f -
+kustomize build apps/jupyter/notebook-controller/upstream/overlays/kubeflow | kubectl apply -f -
+kustomize build apps/jupyter/jupyter-web-app/upstream/overlays/istio | kubectl apply -f -
+kustomize build apps/profiles/upstream/overlays/kubeflow | kubectl apply -f -
+kustomize build common/user-namespace/base | kubectl apply -f -
 
 # https://stackoverflow.com/questions/76793434/kubeflow-jupyter-notebook-error-could-not-find-csrf-cookie-xsrf-token-in-the-req
 # https://github.com/kubeflow/manifests/issues/2225
