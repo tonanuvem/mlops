@@ -79,7 +79,7 @@ echo "Aguardando o IP Externo do Gateway (Ingress)"
 while [ $(kubectl get service istio-ingressgateway -n istio-system -o jsonpath='{ .status.loadBalancer.ingress[].ip }'| wc -m) = '0' ]; do { printf .; sleep 1; } done
 export INGRESS_DOMAIN=$(kubectl get service istio-ingressgateway -n istio-system -o jsonpath='{ .status.loadBalancer.ingress[].ip }')
 echo ""
-echo "INGRESS_DOMAIN = $INGRESS_DOMAIN"
+echo "INGRESS_LoadBalancer = $INGRESS_DOMAIN"
 
 # Warning: It is important that you restart the dex pod by running the command below. If you don’t any previous password 
 # (including the default password 12341234 if not changed) will be used from the time the Service is exposed via LoadBalancer until the time this command is run or the dex is otherwise restarted.
