@@ -110,7 +110,7 @@ kubectl get deploy jupyter-web-app-deployment -n kubeflow -o jsonpath='{.spec.te
 kubectl patch svc istio-ingressgateway -n istio-system -p '{"spec": {"type": "LoadBalancer"}}'
 
 echo "Verificando se o PROFILE está RUNNING : $ kubectl get pod -n kubeflow | grep profile"
-echo "Aguardando profiles-deployment (geralmente 4 min): "
+echo "Aguardando profiles-deployment (geralmente 1 min): "
 while [ "$(kubectl get pod -n kubeflow | grep profiles-deployment | grep Running | wc -l)" != "1" ]; do
   printf "."
   sleep 1
@@ -118,10 +118,11 @@ done
 
 # Aguardando o IP Externo
 echo ""
-echo "Aguardando o IP Externo do Gateway (Ingress)"
+echo "Aguardando o IP Externo do Gateway (Ingress):"
 while [ $(kubectl get service istio-ingressgateway -n istio-system -o jsonpath='{ .status.loadBalancer.ingress[].ip }'| wc -m) = '0' ]; do { printf .; sleep 1; } done
 export INGRESS_DOMAIN=$(kubectl get service istio-ingressgateway -n istio-system -o jsonpath='{ .status.loadBalancer.ingress[].ip }')
-echo "Verificando o uso de cpu e memorias dos nodes"
+echo ""
+echo "Verificando o uso de cpu e memorias dos nodes:"
 echo ""
 kubectl describe nodes | grep % | grep "cpu\|memory"
 echo ""
