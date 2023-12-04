@@ -121,6 +121,9 @@ echo ""
 echo "Aguardando o IP Externo do Gateway (Ingress)"
 while [ $(kubectl get service istio-ingressgateway -n istio-system -o jsonpath='{ .status.loadBalancer.ingress[].ip }'| wc -m) = '0' ]; do { printf .; sleep 1; } done
 export INGRESS_DOMAIN=$(kubectl get service istio-ingressgateway -n istio-system -o jsonpath='{ .status.loadBalancer.ingress[].ip }')
+echo "Verificando o uso de cpu e memorias dos nodes"
+echo ""
+kubectl describe nodes | grep % | grep "cpu\|memory"
 echo ""
 echo "INGRESS_LoadBalancer = $INGRESS_DOMAIN"
 
