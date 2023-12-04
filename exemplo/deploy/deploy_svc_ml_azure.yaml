@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: fiapml
-          image: "registrofiap_usuario/usuario/ml-perfil-aluno-custom-model"
+          image: "registrofiapusuario.azurecr.io/usuario/ml-perfil-aluno-custom-model"
           #imagePullPolicy: Never
           ports:
             - name: http
