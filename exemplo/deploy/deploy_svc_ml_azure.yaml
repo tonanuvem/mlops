@@ -34,48 +34,7 @@ spec:
       port: 5000
       targetPort: 5000
       #nodePort: 32000
-  #type: LoadBalancer
----
-apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
-metadata:
-  name: recomendacao-gateway
-  #namespace: fiap
-spec:
-  selector:
-    istio: ingressgateway
-  servers:
-  - port:
-      number: 80
-      name: http-recomendacao
-      protocol: HTTP
-    hosts:
-    - "recomendacao.${INGRESS_DOMAIN}"
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: recomendacao-vs
-  #namespace: fiap
-spec:
-  hosts:
-  - "recomendacao.${INGRESS_DOMAIN}"
-  gateways:
-  - recomendacao-gateway
-  http:
-  - route:
-    - destination:
-        host: ml-service
-        port:
-          number: 5000
----
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: recomendacao
-  #namespace: fiap
-spec:
-  host: ml-service
+  type: LoadBalancer
   trafficPolicy:
     tls:
       mode: DISABLE
