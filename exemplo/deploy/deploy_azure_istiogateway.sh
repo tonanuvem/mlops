@@ -8,22 +8,10 @@ echo "INGRESS_DOMAIN = $INGRESS_DOMAIN"
 
 kubectl apply -f https://raw.githubusercontent.com/tonanuvem/mlops/main/exemplo/deploy/deploy_svc_ml_azure.yaml
 
+kubectl patch svc ml-service -p '{"spec": {"type": "ClusterIP"}}'
+
 # 1. Apply the following configuration to expose ML:
 cat <<EOF | kubectl apply -f -
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: ml-service
-spec:
-  selector:
-    app: fiapml
-  ports:
-    - protocol: "TCP"
-      port: 5000
-      targetPort: 5000
-      #nodePort: 32000
-  type: ClusterIP
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
