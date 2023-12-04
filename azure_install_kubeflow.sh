@@ -60,13 +60,14 @@ kustomize build apps/volumes-web-app/upstream/overlays/istio | kubectl apply -f 
 # User Namespace
 kustomize build common/user-namespace/base | kubectl apply -f -
 
-# [OPCIONAL] Knative
-kustomize build common/knative/knative-serving/overlays/gateways | kubectl apply -f -
-kustomize build common/istio-1-16/cluster-local-gateway/base | kubectl apply -f -
-kustomize build common/knative/knative-eventing/base | kubectl apply -f -
 # [OPCIONAL] Kubeflow Pipelines
 kustomize build apps/pipeline/upstream/env/cert-manager/platform-agnostic-multi-user | awk '!/well-defined/' | kubectl apply -f -
 
+
+# [OPCIONAL] Knative
+#kustomize build common/knative/knative-serving/overlays/gateways | kubectl apply -f -
+#kustomize build common/istio-1-16/cluster-local-gateway/base | kubectl apply -f -
+#kustomize build common/knative/knative-eventing/base | kubectl apply -f -
 # [OPCIONAL] KServe (usa um pouco mais de memoria)
 #kustomize build contrib/kserve/kserve | kubectl apply -f -
 #kustomize build contrib/kserve/models-web-app/overlays/kubeflow | kubectl apply -f -
