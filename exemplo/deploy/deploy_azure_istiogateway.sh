@@ -60,7 +60,7 @@ EOF
 
 echo ""
 echo "Aguardando a execução de Recomendação ML"
-while [ $(kubectl get pod -A grep ml-deployment | grep Running | wc -l) != '5' ]; do { printf .; sleep 1; } done
+while [ $(kubectl get pod -A | grep ml-deployment | grep Running | wc -l) != '5' ]; do { printf .; sleep 1; } done
 echo ""
 echo "Acessar : http://recomendacao.$INGRESS_DOMAIN"
 echo ""
