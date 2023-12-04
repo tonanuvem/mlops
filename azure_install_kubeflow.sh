@@ -66,11 +66,11 @@ kustomize build common/istio-1-16/cluster-local-gateway/base | kubectl apply -f 
 kustomize build common/knative/knative-eventing/base | kubectl apply -f -
 # [OPCIONAL] Kubeflow Pipelines
 kustomize build apps/pipeline/upstream/env/cert-manager/platform-agnostic-multi-user | awk '!/well-defined/' | kubectl apply -f -
-# [OPCIONAL] KServe (usa um pouco mais de memoria)
-kustomize build contrib/kserve/kserve | kubectl apply -f -
-kustomize build contrib/kserve/models-web-app/overlays/kubeflow | kubectl apply -f -
-kubectl get cm config-domain --namespace knative-serving 
 
+# [OPCIONAL] KServe (usa um pouco mais de memoria)
+#kustomize build contrib/kserve/kserve | kubectl apply -f -
+#kustomize build contrib/kserve/models-web-app/overlays/kubeflow | kubectl apply -f -
+#kubectl get cm config-domain --namespace knative-serving 
 # [OPCIONAL] Katlib (usa bastante memoria, não rodar esse componentes)
 #kustomize build apps/katib/upstream/installs/katib-with-kubeflow | kubectl apply -f -
 # [OPCIONAL] Tensorboard
