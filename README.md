@@ -1,6 +1,6 @@
 ## **Exemplo das informações no Dashboard:**
 
-![Alt Text](dashboard_superset.jpeg)
+![Alt Text](dashboard_superset.jpg)
 
 # kubeflow
 
