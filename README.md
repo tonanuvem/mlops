@@ -1,3 +1,7 @@
+## **Exemplo das informações no Dashboard:**
+
+![Alt Text](dashboard_superset.jpeg)
+
 # kubeflow
 
 Rodando Kubeflow com o Minikube: https://www.kubeflow.org/docs/started/workstation/minikube-linux/
