@@ -1,6 +1,8 @@
 #!/bin/bash
 
 echo "Executando Jupyter Notebook para análise e ML dos dados"
+echo ""
+echo ""
 
 # dir=`pwd`; dir="$(dirname "$dir")"; echo $dir;
 # dir="$(pwd)"; echo $dir;
@@ -25,3 +27,5 @@ echo ""
 echo "URLs do projeto:"
 echo ""
 echo " - JUPYTER AUTO ML          : http://$IP:8789/?token=$TOKEN"
+echo ""
+echo ""
