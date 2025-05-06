@@ -8,7 +8,7 @@ echo ""
 # dir="$(pwd)"; echo $dir;
 #  -v "$dir"/mlops/exemplo:/home/jovyan/work -d jupyter/scipy-notebook \
 
-docker run -it --name automl -v ${PWD}/mlops/exemplo:/opt/nb -p 8789:8888 -d mfeurer/auto-sklearn:master /bin/bash -c "mkdir -p /opt/nb && jupyter notebook --notebook-dir=/opt/nb --ip='0.0.0.0' --port=8888 --no-browser --allow-root"
+docker run -it --name automl -v ${PWD}/mlops/exemplo/mlflow:/opt/nb -p 8789:8888 -d mfeurer/auto-sklearn:master /bin/bash -c "mkdir -p /opt/nb && jupyter notebook --notebook-dir=/opt/nb --ip='0.0.0.0' --port=8888 --no-browser --allow-root"
 
 IP=$(curl -s checkip.amazonaws.com)
 echo "Aguardando TOKEN (geralmente 1 min)"
