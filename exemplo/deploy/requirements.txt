@@ -1,7 +1,7 @@
 Flask
 Flask-RESTful
 Flask-Cors
-joblib
-scikit-learn
+joblib==1.2.0
+scikit-learn==0.24.2
 connexion
 swagger-ui-bundle
