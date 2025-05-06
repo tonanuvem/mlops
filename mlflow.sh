@@ -12,6 +12,8 @@ mlflow server --host 0.0.0.0 --port 8089 &
 # Executando com docker
 # docker run -it --name mlflow -p 8089:5000 -d bitnami/mlflow:2.22.0
 
+IP=$(curl -s checkip.amazonaws.com)
+
 echo ""
 echo ""
 echo "Config OK"
