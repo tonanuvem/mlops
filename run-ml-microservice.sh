@@ -17,5 +17,3 @@ echo "URL de acesso do Microservice com Machine Learning:"
 echo ""
 echo http://$(curl -s checkip.amazonaws.com):32000
 echo ""
-echo "   Senha: admin"
-echo ""
