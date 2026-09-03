@@ -11,7 +11,8 @@ pip install mlflow==2.22.0
 
 export MLFLOW_SERVER_ALLOWED_ORIGINS="*"
 export MLFLOW_SERVER_CORRECT_ORIGIN_HEADER="true"
-mlflow server --host 0.0.0.0 --port 8089 --allowed-hosts "*" &
+mlflow server --host 0.0.0.0 --port 8089 & # versao 2
+# mlflow server --host 0.0.0.0 --port 8089 --allowed-hosts "*" & # versao 3
 
 sleep 1
 
