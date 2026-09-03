@@ -6,8 +6,8 @@
 
 python3 -m venv mlflow
 source mlflow/bin/activate
-# pip install mlflow
-pip install "anyio<4.0.0" mlflow
+pip install mlflow==2.22.0
+# pip install "anyio<4.0.0" mlflow
 
 export MLFLOW_SERVER_ALLOWED_ORIGINS="*"
 export MLFLOW_SERVER_CORRECT_ORIGIN_HEADER="true"
