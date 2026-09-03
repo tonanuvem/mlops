@@ -9,6 +9,8 @@ source mlflow/bin/activate
 # pip install mlflow
 pip install "anyio<4.0.0" mlflow
 
+export MLFLOW_SERVER_ALLOWED_ORIGINS="*"
+export MLFLOW_SERVER_CORRECT_ORIGIN_HEADER="true"
 mlflow server --host 0.0.0.0 --port 8089 --allowed-hosts "*" &
 
 sleep 1
