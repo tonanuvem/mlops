@@ -1,0 +1,19 @@
+# Roteiros do lab (material do instrutor) nao vao para o git
+*.doc
+*.docx
+~$*
+
+# macOS
+.DS_Store
+
+# Gerados ao executar o roteiro (MLflow, notebooks, modelos)
+/mlflow/
+/mlruns/
+/mlartifacts/
+/mlflow.db
+/backup-mlflow-*.tar.gz
+.ipynb_checkpoints/
+exemplo/mlflow/curso_ml.csv
+exemplo/mlflow/model.joblib
+exemplo/deploy/model.joblib
+__pycache__/

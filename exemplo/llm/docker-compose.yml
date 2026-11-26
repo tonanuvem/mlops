@@ -1,0 +1,141 @@
+# BONUS LLM: pipeline com LLM + LLMOps (observabilidade, qualidade e drift)
+#
+# Executado pelo script ~/mlops/llm.sh (nao rodar "docker compose up" direto:
+# o script para o automl, migra o MLflow e copia o modelo antes).
+#
+# Servicos:
+#   classificador  -> o mesmo microsservico da Etapa 2 (porta 32000)
+#   mlflow         -> MLflow 3 com os experimentos das etapas anteriores (porta 8089)
+#   ollama         -> servidor do LLM, roda em CPU (somente na rede interna)
+#   ollama-init    -> baixa os modelos e termina
+#   llm-notebook   -> Jupyter com Python 3.12 para os notebooks 3 e 4 (porta 8790)
+#   mentoria       -> microsservico: classificador + LLM (porta 32001)
+#   carga          -> gerador de requisicoes (so roda quando chamado: --profile carga)
+
+name: mlops-llm
+
+x-llm-env: &llm-env
+  MLFLOW_TRACKING_URI: http://mlflow:5000
+  OPENAI_BASE_URL: http://ollama:11434/v1
+  OPENAI_API_KEY: ollama            # o Ollama nao exige chave; o cliente openai exige um valor
+  CLASSIFICADOR_URL: http://classificador:5000
+  MENTORIA_URL: http://mentoria:5000
+  LLM_MODELO: ${LLM_MODELO:-qwen3:1.7b}
+  LLM_MODELO_ALTERNATIVO: ${LLM_MODELO_ALTERNATIVO:-qwen2.5:0.5b}
+  EMBED_MODELO: ${EMBED_MODELO:-nomic-embed-text}
+
+services:
+
+  classificador:
+    image: ml-perfil-aluno-custom-model     # imagem criada pelo aluno na Etapa 2
+    build: ../deploy                         # usada so se a imagem ainda nao existir
+    ports:
+      - "32000:5000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/predict')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v3.18.0
+    environment:
+      MLFLOW_SERVER_ENABLE_JOB_EXECUTION: "false"   # desliga os workers de jobs (economiza ~1,5 GB de RAM)
+    command: >
+      mlflow server --host 0.0.0.0 --port 5000 --workers 2
+      --backend-store-uri sqlite:////mlops/mlflow.db
+      --artifacts-destination /mlops/mlartifacts --serve-artifacts
+      --allowed-hosts "*" --cors-allowed-origins "*"
+    volumes:
+      - ../..:/mlops                          # raiz do repo: mlflow.db, mlartifacts/ e mlruns/
+    ports:
+      - "8089:5000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:0.40.18
+    environment:
+      OLLAMA_NUM_PARALLEL: "1"          # 2 vCPU: uma geracao por vez
+      OLLAMA_MAX_LOADED_MODELS: "2"     # modelo de chat + modelo de embeddings
+      OLLAMA_KEEP_ALIVE: "30m"          # mantem o modelo carregado entre as chamadas
+    volumes:
+      - ollama:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    deploy:
+      resources:
+        limits:
+          memory: 3g                    # VM sem swap: limita o LLM para nao derrubar os outros servicos
+    restart: unless-stopped
+
+  ollama-init:
+    image: ollama/ollama:0.40.18
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      LLM_MODELO: ${LLM_MODELO:-qwen3:1.7b}
+      LLM_MODELO_ALTERNATIVO: ${LLM_MODELO_ALTERNATIVO:-qwen2.5:0.5b}
+      EMBED_MODELO: ${EMBED_MODELO:-nomic-embed-text}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - 'for m in "$$LLM_MODELO" "$$LLM_MODELO_ALTERNATIVO" "$$EMBED_MODELO"; do echo "baixando $$m"; ollama pull "$$m" >/dev/null || exit 1; done; ollama list'
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: "no"
+
+  llm-notebook:
+    build: ./notebook
+    environment:
+      <<: *llm-env
+    command: >
+      start-notebook.py
+      --ServerApp.root_dir=/home/jovyan/work
+      --PasswordIdentityProvider.hashed_password='argon2:$$argon2id$$v=19$$m=10240,t=10,p=8$$cIQ7S1OapqyvWzmH636CsA$$fh0xOdGwdwv6/cxW5Bqi2mPZuSZlG0zGLwcxl7Ulvac'
+    volumes:
+      - ../mlflow:/home/jovyan/work          # mesma pasta dos notebooks 1 e 2 (curso.csv, curso_ml.csv)
+    ports:
+      - "8790:8888"
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    restart: unless-stopped
+
+  mentoria:
+    build: ./mentoria
+    environment:
+      <<: *llm-env
+      PROMPT_URI: prompts:/mentoria@producao   # alias do Prompt Registry (o notebook 3 cria)
+    ports:
+      - "32001:5000"
+    depends_on:
+      classificador:
+        condition: service_healthy
+      mlflow:
+        condition: service_healthy
+      ollama-init:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  carga:
+    build: ./mentoria
+    profiles: ["carga"]
+    environment:
+      <<: *llm-env
+    working_dir: /dados
+    volumes:
+      - ../mlflow:/dados:ro
+    entrypoint: ["python", "/dados/gerar_carga.py"]
+    depends_on:
+      - mentoria
+
+volumes:
+  ollama:

@@ -1,0 +1,8 @@
+mlflow==3.18.0
+openai==3.60.0
+pandas
+scipy
+scikit-learn
+matplotlib
+requests
+tqdm
