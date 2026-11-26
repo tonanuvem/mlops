@@ -49,7 +49,8 @@ def main():
         sys.exit(f"modo invalido: {modo}")
     janela = {"normal": "baseline", "drift-entrada": "drift_entrada", "drift-saida": "drift_saida"}[modo]
 
-    alunos = selecionar(carregar_alunos(), modo, n, semente=int(time.time()) % 1000)
+    # semente fixa: "normal" e "drift-saida" enviam os MESMOS alunos (so o sistema muda)
+    alunos = selecionar(carregar_alunos(), modo, n, semente=42)
     print(f"Enviando {len(alunos)} alunos para {MENTORIA_URL}/mentoria (janela={janela})")
     for i, (_, linha) in enumerate(alunos.iterrows(), 1):
         aluno = {f: float(linha[f]) for f in FEATURES}
