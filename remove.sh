@@ -14,7 +14,7 @@ CONTAINERS="automl classificador jupyter mlflow"
 IMAGENS="ml-perfil-aluno-custom-model mfeurer/auto-sklearn:master jupyter/scipy-notebook bitnami/mlflow:2.22.0
 ollama/ollama:0.40.18 ghcr.io/mlflow/mlflow:v3.18.0 mlops-llm-mentoria mlops-llm-llm-notebook mlops-llm-carga
 quay.io/jupyter/minimal-notebook:python-3.12 python:3.12-slim python:3.8-slim"
-ARQUIVOS="mlflow mlruns mlartifacts mlflow.db backup-mlflow-*.tar.gz exemplo/mlflow/curso_ml.csv
+ARQUIVOS="mlflow mlruns mlartifacts mlflow.db mlflow.db-shm mlflow.db-wal backup-mlflow-*.tar.gz exemplo/mlflow/curso_ml.csv
 exemplo/mlflow/model.joblib exemplo/deploy/model.joblib exemplo/mlflow/.ipynb_checkpoints exemplo/mlflow/mlruns"
 
 echo "Este script vai remover do LAB de MLOps:"
@@ -39,7 +39,9 @@ echo "==> docker compose down (containers, rede, volumes, imagens construidas)"
 [ -f "$DIR/exemplo/llm/docker-compose.yml" ] && $COMPOSE --profile carga down -v --remove-orphans --rmi local 2>&1 | tail -3 || true
 
 echo "==> containers criados manualmente"
-for c in $CONTAINERS; do docker rm -f "$c" >/dev/null 2>&1 && echo "  removido: $c"; done
+for c in $CONTAINERS; do
+  docker ps -a --format '{{.Names}}' | grep -qx "$c" && docker rm -f "$c" >/dev/null && echo "  removido: $c"
+done
 
 echo "==> volumes que sobraram do compose"
 for v in $(docker volume ls -q --filter label=com.docker.compose.project=mlops-llm); do
