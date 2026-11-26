@@ -50,7 +50,7 @@ echo "==> imagens"
 for i in $IMAGENS; do docker rmi "$i" >/dev/null 2>&1 && echo "  removida: $i"; done
 
 echo "==> processo do MLflow no host"
-pkill -f "mlflow server" 2>/dev/null && echo "  mlflow server encerrado" || echo "  nenhum"
+pkill -f "mlflow server|mlflow.server:app" 2>/dev/null && echo "  mlflow server encerrado" || echo "  nenhum"
 
 echo "==> arquivos gerados"
 cd "$DIR" || exit 1

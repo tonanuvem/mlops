@@ -48,9 +48,12 @@ done
 
 # 3. MLflow ---------------------------------------------------------------------
 passo "3/5 Migrando o MLflow para a versao 3 (com os experimentos das etapas anteriores)"
-if pgrep -f "mlflow server" >/dev/null; then
-  pkill -f "mlflow server" || true
-  for i in $(seq 1 15); do pgrep -f "mlflow server" >/dev/null || break; sleep 1; done
+# o mlflow.sh sobe "mlflow server", que cria workers gunicorn ("mlflow.server:app"): encerrar os dois
+MLFLOW_HOST='mlflow server|mlflow.server:app'
+if pgrep -f "$MLFLOW_HOST" >/dev/null; then
+  pkill -f "$MLFLOW_HOST" || true
+  for i in $(seq 1 15); do pgrep -f "$MLFLOW_HOST" >/dev/null || break; sleep 1; done
+  pkill -9 -f "$MLFLOW_HOST" 2>/dev/null || true
   echo "MLflow 2 (processo no host) encerrado."
 fi
 if [ -d "$DIR/mlruns" ] && [ ! -f "$DIR/mlflow.db" ]; then
